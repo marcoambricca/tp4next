@@ -1,15 +1,30 @@
-import Layout from './components/layout-comp.js';
-import './styles/navbar.css'
+'use client'
 
-export const metadata = {
-  title: "Gestor de citas",
-  description: "Creado por Marco Ambricca",
-};
+import Link from 'next/link';
+import './styles/navbar.css'
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme='dark'>
-      <body><Layout>{children}</Layout></body>
+      <body>
+        <nav className='navbar'>
+          <ul>
+            <li>
+              <Link href="/">Home</Link>
+            </li>
+            <li>
+              <Link href="/about">About</Link>
+            </li>
+            <li>
+              <Link href="/booking">Booking</Link>
+            </li>
+            <li>
+              <Link href="/contact">Contact</Link>
+            </li>
+          </ul>
+        </nav>
+        {children}
+      </body>
     </html>
   );
 }

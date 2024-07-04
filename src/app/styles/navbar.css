@@ -1,5 +1,38 @@
-ul .nav-list{
+/* Navbar container */
+.navbar {
+    position: sticky;
+    top: 0;
+    background-color: #333; /* Dark background color */
+    padding: 1rem;
     display: flex;
-    list-style-type: none;
-    text-decoration: none;
-}
+    justify-content: center; /* Center the navbar items */
+    align-items: center;
+    z-index: 1000; /* Ensure the navbar is on top */
+  }
+  
+  /* Navbar list */
+  .navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  /* Navbar items */
+  .navbar li {
+    margin: 0 1rem; /* Space between items */
+  }
+  
+  /* Navbar links */
+  .navbar a {
+    color: white; /* White text color */
+    text-decoration: none; /* Remove default underline */
+    font-size: 1.2rem; /* Adjust the font size as needed */
+    transition: all 0.3s ease; /* Smooth transition for the underline effect */
+  }
+  
+  /* Underline effect on hover */
+  .navbar a:hover {
+    text-decoration: underline;
+  }
+  
