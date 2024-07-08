@@ -1,4 +1,6 @@
 'use client'
+import '../styles/navbar.css';
+import '../styles/index.css';
 
 import { useState } from "react";
 import { useCitas } from "../hooks/useCitas.js"

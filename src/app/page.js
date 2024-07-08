@@ -1,13 +1,32 @@
 'use client'
 
+import { useState } from "react";
 import List from "./components/list.jsx";
 import Modal from "./components/modal.jsx";
-import { useCitas } from "./hooks/useCitas.js";
 import './styles/index.css';
 
-export default function Home(props) {
-  const { arrayCitas, deleteCita, handleDelete, showModal, setShowModal } = useCitas();
+export default function Home() {
+  const [arrayCitas, setArrayCitas] = useState([]);
   
+  const handleAddCita = (cita) => {
+    setArrayCitas([...arrayCitas, cita]);
+  }
+
+  const [citaAEliminar, setCitaAEliminar] = useState();
+  const [showModal, setShowModal] = useState(false);
+
+  const deleteCita = (target) => {
+    setCitaAEliminar(target);
+    setShowModal(true);
+  };
+
+  const handleDelete = (target) =>{
+    let mascotName = target.target.id
+    const updatedArray = arrayCitas.filter(cita => cita.mascotName !== mascotName);
+    setArrayCitas(updatedArray);
+    setShowModal(false);
+  }
+
   return (
     <div className="App"> 
       <List arrayCitas={arrayCitas} onDeleteCita={deleteCita}/>
