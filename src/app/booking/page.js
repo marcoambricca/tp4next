@@ -1,61 +1,45 @@
 'use client'
-import '../styles/navbar.css';
-import '../styles/index.css';
 
+import '../styles/booking.css';
 import { useState } from "react";
-import { useCitas } from "../hooks/useCitas.js"
+import Form from '../components/form.jsx';
+import List from '../components/list.jsx';
+import Modal from '../components/modal.jsx';
 
 export default function Booking(){
-  const { handleAddCita } = useCitas();
+  const [arrayCitas, setArrayCitas] = useState([]);
   
-  const [formData, setFormData] = useState({
-    mascotName: '',
-    ownerName: '',
-    matchDate: '',
-    matchTime: '',
-    sintomas: ''
-  });
+  const handleAddCita = (cita) => {
+    setArrayCitas([...arrayCitas, cita]);
+  }
 
-  const handleChange = (e) => {
-      setFormData({
-          ...formData,
-          [e.target.name]: e.target.value
-      });
+  const [citaAEliminar, setCitaAEliminar] = useState();
+  const [showModal, setShowModal] = useState(false);
+
+  const deleteCita = (target) => {
+    setCitaAEliminar(target);
+    setShowModal(true);
   };
 
-  const handleSubmit = (e) => {
-      e.preventDefault();
-      handleAddCita(formData);
-      console.log(formData);
-      setFormData({
-          mascotName: '',
-          ownerName: '',
-          matchDate: '',
-          matchTime: '',
-          sintomas: ''
-      });
-  };
+  const handleDelete = (target) =>{
+    let mascotName = target.target.id
+    const updatedArray = arrayCitas.filter(cita => cita.mascotName !== mascotName);
+    setArrayCitas(updatedArray);
+    setShowModal(false);
+  }
   
   return (
-    <div className="booking">
-      <form onSubmit={handleSubmit}>
-            <label>Nombre mascota</label>
-            <input type="text" value={formData.mascotName} className='form-input' placeholder="Nombre mascota" name="mascotName" onChange={handleChange} required/>
-
-            <label>Nombre dueño</label>
-            <input type="text" value={formData.ownerName} className='form-input' placeholder="Nombre dueño" name="ownerName" onChange={handleChange} required/>
-
-            <label>Fecha</label>
-            <input type="date" value={formData.matchDate} className='form-input' name="matchDate" onChange={handleChange} required/>
-
-            <label>Horario</label>
-            <input type="time" value={formData.matchTime} className='form-input' name="matchTime" onChange={handleChange} required/>
-
-            <label>Sintomas: </label>
-            <textarea name='sintomas' rows={4} value={formData.sintomas} className='form-input' style={{resize: "none"}} onChange={handleChange}></textarea>
-
-            <button type="submit" className="btn submit-btn">Agregar cita</button>
-        </form>
+    <div className="booking"> 
+      <Form handleAddCita={handleAddCita}/>
+      <List arrayCitas={arrayCitas} onDeleteCita={deleteCita}/>
+      {showModal && <Modal heading={'¿Desea eliminar esta cita?'} setter={(value) => {
+            if (value) {
+              handleDelete(citaAEliminar); 
+            }
+            setShowModal(false); 
+          }}
+          isOpen={setShowModal}
+      />}
     </div>
   );
 }
